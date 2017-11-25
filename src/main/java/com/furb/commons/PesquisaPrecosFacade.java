@@ -1,16 +1,16 @@
 package com.furb.commons;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.activity.InvalidActivityException;
 
 import org.omg.PortableServer.POAPackage.ServantNotActive;
 
+import com.furb.controller.Sort;
 import com.furb.model.CD;
-import com.furb.model.Instance;
-import com.furb.model.Loja;
 
-public class PesquisaPrecosFacade extends Instance implements Loja {
+public class PesquisaPrecosFacade extends Adapter {
 
 	public boolean conectar(String usuario, String senha) throws Exception {
 		submarino.connect(usuario, senha);
@@ -27,7 +27,6 @@ public class PesquisaPrecosFacade extends Instance implements Loja {
 			throw new InvalidActivityException("Uma conecxao deve ser feita antes de qualquer pesquisa");
 
 		try {
-			
 
 			return null;
 		} finally {
@@ -48,10 +47,16 @@ public class PesquisaPrecosFacade extends Instance implements Loja {
 	}
 
 	public static void main(String[] args) {
-		PesquisaPrecosFacade a = new PesquisaPrecosFacade();
+		Adapter a = new PesquisaPrecosFacade();
+		Sort b = new Sort();
 		try {
 			a.conectar("furb", "furb");
-			a.procurar("ad");
+			ArrayList<CD> g = b.artistaPreco(a.allCDs());
+
+			for (CD cd : g) {
+				System.out.println(cd.getArtista() + " " + cd.getPreco());
+			}
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

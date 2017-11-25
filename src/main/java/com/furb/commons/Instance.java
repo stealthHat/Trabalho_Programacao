@@ -1,4 +1,4 @@
-package com.furb.model;
+package com.furb.commons;
 
 import conexao.SomLivreServidor;
 import didatico.SubmarinoProducts;

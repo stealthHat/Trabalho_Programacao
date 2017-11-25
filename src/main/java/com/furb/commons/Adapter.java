@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import org.omg.PortableServer.POAPackage.ServantNotActive;
 
 import com.furb.model.CD;
-import com.furb.model.Instance;
+import com.furb.model.Loja;
 
-public class Adapter extends Instance {
+public abstract class Adapter extends Instance implements Loja{
 
 	public ArrayList<CD> allCDs() throws ServantNotActive {
+
 		ArrayList<CD> arrayList = new ArrayList<>();
 		String[][] matrix = submarino.getCDProducts();
 

@@ -4,11 +4,13 @@ import java.util.Collection;
 
 import javax.activity.InvalidActivityException;
 
-public interface Loja<T> {
+import org.omg.PortableServer.POAPackage.ServantNotActive;
 
-	boolean conectar(Usuario usuario) throws Exception;
+public interface Loja {
+
+	boolean conectar(String usuario, String senha) throws Exception;
 
 	void desconectar();
 
-	Collection<T> procurar(String chave) throws InvalidActivityException;
+	Collection<CD> procurar(String chave) throws InvalidActivityException, ServantNotActive;
 }

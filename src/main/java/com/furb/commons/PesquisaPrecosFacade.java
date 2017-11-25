@@ -1,23 +1,20 @@
 package com.furb.commons;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.activity.InvalidActivityException;
 
+import org.omg.PortableServer.POAPackage.ServantNotActive;
+
+import com.furb.model.CD;
+import com.furb.model.Instance;
 import com.furb.model.Loja;
-import com.furb.model.Usuario;
 
-import conexao.SomLivreServidor;
-import didatico.SubmarinoProducts;
+public class PesquisaPrecosFacade extends Instance implements Loja {
 
-public class PesquisaPrecosFacade implements Loja {
-
-	SomLivreServidor somLivre = new SomLivreServidor();
-	SubmarinoProducts submarino = SubmarinoProducts.getInstance();
-
-	public boolean conectar(Usuario usuario) throws Exception {
-		submarino.connect(usuario.getNome(), usuario.getPassword());
+	public boolean conectar(String usuario, String senha) throws Exception {
+		submarino.connect(usuario, senha);
+		registrar(usuario);
 		return submarino.isConnected();
 	}
 
@@ -25,18 +22,17 @@ public class PesquisaPrecosFacade implements Loja {
 		submarino.disconnect();
 	}
 
-	public Collection procurar(String chave) throws InvalidActivityException {
+	public Collection<CD> procurar(String chave) throws InvalidActivityException, ServantNotActive {
 		if (!submarino.isConnected())
 			throw new InvalidActivityException("Uma conecxao deve ser feita antes de qualquer pesquisa");
 
-		ArrayList<String> array = new ArrayList<>();
-		String[] a = somLivre.buscaCD();
-		for (String string : a) {
-			array.add(string);
-		}
+		try {
+			
 
-		desconectar();
-		return array;
+			return null;
+		} finally {
+			desconectar();
+		}
 	}
 
 	public void pesquisar(String chave) {
@@ -54,8 +50,7 @@ public class PesquisaPrecosFacade implements Loja {
 	public static void main(String[] args) {
 		PesquisaPrecosFacade a = new PesquisaPrecosFacade();
 		try {
-			Usuario u = new Usuario("Alo", "senha");
-			a.conectar(u);
+			a.conectar("furb", "furb");
 			a.procurar("ad");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
